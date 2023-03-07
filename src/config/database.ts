@@ -1,7 +1,7 @@
 import { registerAs } from '@nestjs/config';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
-export default registerAs('postgres', (): PostgresConnectionOptions => {
+export default registerAs('database', (): PostgresConnectionOptions => {
   return {
     type: 'postgres',
     host: process.env.DB_HOST,

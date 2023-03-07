@@ -16,6 +16,4 @@ export const EnvVariablesValidationSchema = Joi.object({
   DB_PASSWORD: Joi.string().required(),
   DB_NAME: Joi.string().required(),
   DB_CONN_ENCRYPT: Joi.string().allow('', null).valid('true', 'false').default('false'),
-
-  CIPHER_KEY: Joi.string().required(),
 });
