@@ -19,7 +19,7 @@ async function bootstrap() {
   }
 
   app.enableCors();
-  await app.listen(3001);
+  await app.listen(port);
 
   app.useLogger(loggerService);
   loggerService.setContext('bootstrap');
