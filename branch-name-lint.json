@@ -1,0 +1,13 @@
+{
+  "branchNameLinter": {
+    "prefixes": [
+      "feature",
+      "hotfix",
+      "bugfix",
+      "release"
+    ],
+    "regex": "^(feature|bugfix|hotfix|release|issue)\\/PW-[0-9](\\-)?.*",
+    "regexOptions": "i",
+    "msgDoesNotMatchRegex": "Branch \"%s\" does not match the allowed pattern: \"%s\""
+  }
+}
