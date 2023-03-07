@@ -17,7 +17,7 @@ export default registerAs('winston', () => {
             const correlationId = log.correlationId ? `[${log.correlationId}]` : '';
             const traceId = log.traceId ? ` ${log.traceId} ` : ' ';
 
-            return `[${log.level}] ${correlationId}${traceId}${log.timestamp} [${log.service}]${module} ${log.message} ${trace}`;
+            return `[${log.level}] ${correlationId}${traceId}${log.timestamp} ${module} ${log.message} ${trace}`;
           }),
         ),
       }),
