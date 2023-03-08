@@ -13,7 +13,7 @@ export default registerAs('database', (): PostgresConnectionOptions => {
     extra: {
       trustServerCertificate: true,
     },
-    synchronize: false,
+    synchronize: true, //TODO: should be changed to false in production
     logging: false,
   };
 });
