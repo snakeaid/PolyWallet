@@ -23,12 +23,8 @@ export class AuthenticationService {
     if (user && user.password === password) {
       const { password, ...result } = user;
 
-      this.logger.debug(`User ${username} is valid`);
-
       return result;
     }
-
-    this.logger.debug(`User ${username} is invalid`);
 
     return null;
   }
@@ -42,18 +38,8 @@ export class AuthenticationService {
   }
 
   public async register(username: string, password: string): Promise<UsersEntity> {
-    // try {
     const user = this.usersRepository.add(username, password);
 
-    this.logger.log(`User ${username} registered successfully`);
-
     return user;
-    // } catch (e) {
-    //   if (e.code === PostgresErrorCode.UniqueViolation) {
-    //     throw new UserAlreadyExistsException();
-    //   }
-    //
-    //   throw new InternalServerErrorException();
-    // }
   }
 }
