@@ -16,6 +16,10 @@
     "prepare": "husky install",
     "deploy": "npm install && npm run build && npm run start:prod"
   },
+  "engines": {
+    "npm": ">=8.0.0 <9.0.0",
+    "node": ">=16.0.0 <17.0.0"
+  },
   "dependencies": {
     "@golevelup/nestjs-rabbitmq": "^3.4.0",
     "@nestjs/common": "^9.2.1",
