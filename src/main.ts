@@ -9,7 +9,7 @@ async function bootstrap() {
   const loggerService = await app.resolve(LoggerService);
   const configService = app.get(ConfigService);
   const isProduction = configService.get('NODE_ENV') === 'production';
-  const port = configService.get('APP_PORT') || 3012;
+  const port = configService.get('APP_PORT') || 8080;
 
   if (configService.get('NODE_ENV') !== 'production') {
     const options = new DocumentBuilder().build();
