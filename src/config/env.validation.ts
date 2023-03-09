@@ -7,11 +7,6 @@ export const EnvVariablesValidationSchema = Joi.object({
   LOGS_PATH: Joi.string().allow('', null),
   SERVICE_NAME: Joi.string().allow('', null),
 
-  USERNAME: Joi.string().required(),
-  PASSWORD: Joi.string().required(),
-  HOST: Joi.string().required(),
-  PORT: Joi.string().required(),
-
   DB_USERNAME: Joi.string().required(),
   DB_PASSWORD: Joi.string().required(),
   DB_NAME: Joi.string().required(),
