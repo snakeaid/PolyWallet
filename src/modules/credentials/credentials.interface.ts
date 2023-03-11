@@ -3,6 +3,6 @@ export interface CredentialsKey {
   integrationName: string;
 }
 
-export interface Credentials {
+export interface Credentials extends CredentialsKey {
   credentials: string;
 }

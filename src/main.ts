@@ -3,8 +3,6 @@ import { AppModule } from './app.module';
 import { LoggerService } from './modules/logger/logger.service';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { CredentialsService } from './modules/credentials/credentials.service';
-import { MonobankCredentialsModel } from './modules/monobank/monobank-credentials.model';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -29,14 +27,6 @@ async function bootstrap() {
   loggerService
     .toScopeLogger(null)
     .log(`Application started ${!isProduction ? `on ${port} port.` : ``} `);
-
-  const credentialsService = app.get(CredentialsService);
-
-  const x = await credentialsService.getCredentialsAsync<MonobankCredentialsModel>({
-    username: 'user1',
-    integrationName: 'monobank',
-  });
-  console.log(x.token);
 }
 
 bootstrap();
