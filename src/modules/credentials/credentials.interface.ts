@@ -1,6 +1,8 @@
+import { IntegrationsEnum } from '../../shared/enums/integrations.enum';
+
 export interface CredentialsKey {
   username: string;
-  integrationName: string;
+  integrationName: IntegrationsEnum;
 }
 
 export interface Credentials extends CredentialsKey {
