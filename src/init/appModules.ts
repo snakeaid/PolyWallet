@@ -5,6 +5,7 @@ import { EnvVariablesValidationSchema } from '../config/env.validation';
 import configs from '../config/main';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DynamooseModule } from 'nestjs-dynamoose';
+import { MongooseModule } from '@nestjs/mongoose';
 
 export const initAppModules = [
   ConfigModule.forRoot({
@@ -33,6 +34,12 @@ export const initAppModules = [
     inject: [ConfigService],
     useFactory: async (configService: ConfigService) => ({
       ...configService.get('dynamo'),
+    }),
+  }),
+  MongooseModule.forRootAsync({
+    inject: [ConfigService],
+    useFactory: async (configService: ConfigService) => ({
+      ...configService.get('mongo'),
     }),
   }),
 ];
