@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
-import { CredentialsService } from '../credentials/credentials.service';
 import { CredentialsModule } from '../credentials/credentials.module';
+import { MonobankController } from './monobank.controller';
+import { HttpModule } from '@nestjs/axios';
+import { MonobankService } from './monobank.service';
 
 @Module({
-  imports: [CredentialsModule],
-  providers: [CredentialsService],
-  exports: [CredentialsService],
+  imports: [CredentialsModule, HttpModule],
+  providers: [MonobankService],
+  controllers: [MonobankController],
+  exports: [MonobankService],
 })
 export class MonobankModule {}
