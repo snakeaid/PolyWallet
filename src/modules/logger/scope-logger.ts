@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { LoggerService as NestLoggerService, NotImplementedException } from '@nestjs/common';
+import { LoggerService as NestLoggerService } from '@nestjs/common';
 import { LoggerService } from './logger.service';
 
 export class ScopeLogger implements NestLoggerService {
@@ -26,10 +26,7 @@ export class ScopeLogger implements NestLoggerService {
     this.loggerService.debug(message, context, this.correlationId);
   }
 
-  /**
-   * @deprecated Not Implemented
-   */
-  public verbose(): any {
-    throw new NotImplementedException();
+  public verbose(message: any, context?: string): any {
+    this.loggerService.verbose(message, context, this.correlationId);
   }
 }

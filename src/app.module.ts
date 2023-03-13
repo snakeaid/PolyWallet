@@ -4,7 +4,8 @@ import { LoggerModule } from './modules/logger/logger.module';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { AppController } from './app.controller';
 import { MonobankModule } from './modules/monobank/monobank.module';
-import { APP_PIPE } from '@nestjs/core';
+import { APP_FILTER, APP_PIPE } from '@nestjs/core';
+import { ApplicationExceptionFilter } from './filters/application-exception.filter';
 
 @Module({
   imports: [...initAppModules, LoggerModule, AuthenticationModule, MonobankModule],
@@ -16,6 +17,10 @@ import { APP_PIPE } from '@nestjs/core';
         new ValidationPipe({
           whitelist: true,
         }),
+    },
+    {
+      provide: APP_FILTER,
+      useClass: ApplicationExceptionFilter,
     },
   ],
 })

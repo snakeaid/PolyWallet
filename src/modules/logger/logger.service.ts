@@ -1,4 +1,4 @@
-import { ConsoleLogger, Inject, Injectable, NotImplementedException, Scope } from '@nestjs/common';
+import { ConsoleLogger, Inject, Injectable, Scope } from '@nestjs/common';
 import * as uuid from 'uuid';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { ScopeLogger } from './scope-logger';
@@ -8,6 +8,7 @@ export enum LogLevel {
   WARNING = 'warn',
   INFO = 'info',
   DEBUG = 'debug',
+  VERBOSE = 'verbose',
 }
 
 @Injectable({ scope: Scope.TRANSIENT })
@@ -32,11 +33,8 @@ export class LoggerService extends ConsoleLogger {
     this.winston.log(LogLevel.DEBUG, this.buildLogObject(message, context, correlationId));
   }
 
-  /**
-   * @deprecated Not Implemented
-   */
-  public verbose(): any {
-    throw new NotImplementedException();
+  public verbose(message: any, context?: string, correlationId?: string): any {
+    this.winston.log(LogLevel.VERBOSE, this.buildLogObject(message, context, correlationId));
   }
 
   public toScopeLogger(correlationId: string): ScopeLogger {
