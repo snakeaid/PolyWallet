@@ -37,7 +37,7 @@ export class AuthenticationController {
   }
 
   @UseGuards(JwtGuard)
-  @Get('profile')
+  @Get('/profile')
   public getProfile(@Request() req) {
     return req.user;
   }

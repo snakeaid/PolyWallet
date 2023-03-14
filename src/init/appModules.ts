@@ -4,20 +4,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EnvVariablesValidationSchema } from '../config/env.validation';
 import configs from '../config/main';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
-type ConfigServiceGet = {
-  nodes: string;
-  auth: {
-    username: string;
-    password: string;
-  };
-  tls: {
-    tlsEnabled: boolean;
-    ca: string;
-    key: string;
-    cert: string;
-  };
-};
+import { DynamooseModule } from 'nestjs-dynamoose';
+import { MongooseModule } from '@nestjs/mongoose';
 
 export const initAppModules = [
   ConfigModule.forRoot({
@@ -40,6 +28,18 @@ export const initAppModules = [
     useFactory: async (configService: ConfigService) => ({
       ...configService.get('database'),
       autoLoadEntities: false,
+    }),
+  }),
+  DynamooseModule.forRootAsync({
+    inject: [ConfigService],
+    useFactory: async (configService: ConfigService) => ({
+      ...configService.get('dynamo'),
+    }),
+  }),
+  MongooseModule.forRootAsync({
+    inject: [ConfigService],
+    useFactory: async (configService: ConfigService) => ({
+      ...configService.get('mongo'),
     }),
   }),
 ];
