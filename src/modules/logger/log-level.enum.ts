@@ -1,5 +1,5 @@
 export enum LOG_LEVEL {
-  log = 'log',
+  info = 'info',
   debug = 'debug',
   warn = 'warn',
   error = 'error',

@@ -6,6 +6,9 @@ import { LoggerService } from '../logger/logger.service';
 import { MonobankAPI } from './monobank.api';
 import { InvalidCredentialsException } from 'src/exceptions/invalid-credentials.exception';
 import { MonobankCredentialsManager } from './credentials/monobank-credentials.manager';
+import { MonobankClientInfoService } from './client-info/monobank-client-info.service';
+import { MonobankClientInfo } from './client-info/schemas/monobank-client-info.schema';
+import { MonobankOperationsService } from './operations/monobank-operations.service';
 
 @Injectable()
 export class MonobankService {
@@ -14,6 +17,8 @@ export class MonobankService {
   public constructor(
     private readonly credentialsManager: MonobankCredentialsManager,
     private readonly api: MonobankAPI,
+    private readonly clientInfoService: MonobankClientInfoService,
+    private readonly operationsService: MonobankOperationsService,
     loggerService: LoggerService,
   ) {
     loggerService.setContext(MonobankService.name);
@@ -35,9 +40,20 @@ export class MonobankService {
   public async addNewUser(username: string, credentialsModel: MonobankCredentialsModel) {
     await this.authenticate(username, credentialsModel);
 
-    const credentials = this.credentialsManager.getCredentialsAsync(username);
+    const credentials = await this.credentialsManager.getCredentialsAsync(username);
     if (!credentials) {
       await this.credentialsManager.saveCredentialsAsync(username, credentialsModel);
+      await this.saveClientInfo(username, credentialsModel);
+      this.operationsService.saveOldOperations(username, credentialsModel);
     }
+  }
+
+  private async saveClientInfo(username: string, credentialsModel: MonobankCredentialsModel) {
+    const clientInfoResponse = await this.api.getClientInfo(credentialsModel.token);
+
+    const clientInfo: MonobankClientInfo = clientInfoResponse.data;
+    clientInfo.username = username;
+
+    await this.clientInfoService.saveClientInfo(clientInfo);
   }
 }

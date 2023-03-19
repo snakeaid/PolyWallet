@@ -1,12 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
+import { ScopeLogger } from '../logger/scope-logger';
+import { LoggerService } from '../logger/logger.service';
+import { AxiosRequestConfig } from 'axios';
 
 @Injectable()
 export class MonobankAPI {
   private readonly baseURL = 'https://api.monobank.ua';
+  private readonly logger: ScopeLogger;
 
-  public constructor(private readonly httpService: HttpService) {}
+  public constructor(private readonly httpService: HttpService, loggerService: LoggerService) {
+    loggerService.setContext(MonobankAPI.name);
+    this.logger = loggerService.toScopeLogger(null);
+  }
 
   public async getClientInfo(token: string) {
     const path = '/personal/client-info';
@@ -37,16 +44,20 @@ export class MonobankAPI {
   private async request(method: string, path: string, token: string, body?: string) {
     const url = this.baseURL + path;
 
-    const response = await firstValueFrom(
-      this.httpService.request({
-        method: method,
-        url: url,
-        headers: {
-          'X-Token': token,
-        },
-        data: body,
-      }),
-    );
+    const requestConfig: AxiosRequestConfig<any> = {
+      method: method,
+      url: url,
+      headers: {
+        'X-Token': token,
+      },
+      data: body,
+    };
+
+    this.logger.verbose(`Making HTTP request: ${JSON.stringify(requestConfig)}`);
+
+    const response = await firstValueFrom(this.httpService.request(requestConfig));
+
+    this.logger.verbose(`Making HTTP request: ${JSON.stringify(requestConfig)}`);
 
     return response;
   }

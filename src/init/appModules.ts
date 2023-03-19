@@ -6,6 +6,8 @@ import configs from '../config/main';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DynamooseModule } from 'nestjs-dynamoose';
 import { MongooseModule } from '@nestjs/mongoose';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 export const initAppModules = [
   ConfigModule.forRoot({
@@ -40,6 +42,13 @@ export const initAppModules = [
     inject: [ConfigService],
     useFactory: async (configService: ConfigService) => ({
       ...configService.get('mongo'),
+    }),
+  }),
+  GraphQLModule.forRootAsync<ApolloDriverConfig>({
+    inject: [ConfigService],
+    driver: ApolloDriver,
+    useFactory: async (configService: ConfigService) => ({
+      ...configService.get('graphql'),
     }),
   }),
 ];

@@ -6,9 +6,16 @@ import { AppController } from './app.controller';
 import { MonobankModule } from './modules/monobank/monobank.module';
 import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { ApplicationExceptionFilter } from './filters/application-exception.filter';
+import { OperationsModule } from './modules/operations/operations.module';
 
 @Module({
-  imports: [...initAppModules, LoggerModule, AuthenticationModule, MonobankModule],
+  imports: [
+    ...initAppModules,
+    LoggerModule,
+    AuthenticationModule,
+    MonobankModule,
+    OperationsModule,
+  ],
   controllers: [AppController],
   providers: [
     {
