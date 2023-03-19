@@ -15,7 +15,10 @@ export class OperationsService {
   }
 
   public async getOperationsByUsername(username: string): Promise<MoneyOperation[]> {
-    const operations = await this.moneyOperationModel.find({ username: username }).exec();
+    const operations = await this.moneyOperationModel
+      .find({ username: username })
+      .sort({ timestamp: 'descending' })
+      .exec();
 
     return operations;
   }
